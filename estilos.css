@@ -1,139 +1,106 @@
+:root {
+    --cor1: black;
+    --cor2: rgb(44, 43, 43);
+    --transicao_hover: rgb(85, 84, 84);;
+    --cor_teclas: rgb(22, 22, 22);
+    --cor_btn_operacao: rgba(90, 89, 89, 0.507);
+    --cor_fonte_btn_operacao: rgb(42, 202, 42);
+    --cor_btn_resultado: rgba(38, 182, 38, 0.774);
+}
+
 * {
-    margin: 0;
-    padding: 0;
     box-sizing: border-box;
 }
 
 html, body {
-    height: 100%;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
 }
 
 body {
-    background-color: rgba(59, 56, 56, 0.856);
+    background-color: var(--cor1);
 }
 
-#container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-    
-#calculadora {
-    background-color: rgb(49, 45, 45);
-    max-width: 450px;
-    padding: 10px;
-    margin: auto;
+#container-visor {
+    height: 30vh;
 }
 
 #teclado {
-    display: grid;
-    grid-auto-columns: 1fr 1fr 1fr 1fr;
-    grid-auto-rows: 1fr 1fr 1fr;
-    width: 100%;
-    background-color: gray;
-    height: 400px;
-    margin: auto;
+    height: 60vh;
+}
+
+#teclado > div > button, #teclado > div {
+    margin: 0;
+    padding: 0;
 }
 
 #visor {
-    display: block;
     width: 100%;
-    margin: auto;
-    background-color: whitesmoke;
-    height: 80px;
-    font-size: 200%;
+    height: 100%;  
+    box-sizing: border-box;
+    background-color: var(--cor1);
+    border: none;
+    color: white;
+    text-align: right;
+    font-size: 3em;
 }
 
-.num-teclado, 
-.operacao {
-    width: 100%;
-    height: 100%;
-    font-size: 125%;
+.btn {
+    color: white;
+    font-size: 2em;
+    text-align: center;
+    height: 90%;
 }
 
-.teclas {
-    padding: 10px;
-    background-color: gray;
-}
-
-#num-1 {
-    grid-column: 1 / 1;
-    grid-row: 1 / 1;
-}
-
-#num-2 {
-    grid-column: 2 / 2;
-    grid-row: 1 / 1;
-}
-
-#num-3 {
-    grid-column: 3 / 3;
-    grid-row: 1 / 1;
-}
-
-#num-4 {
-    grid-column: 1 / 1;
-    grid-row: 2 / 2;
-}
-
-#num-5 {
-    grid-column: 2 / 2;
-    grid-row: 2 / 2;
-}
-
-#num-6 {
-    grid-column: 3 / 3;
-    grid-row: 2 / 2;
-}
-
-#num-7 {
-    grid-column: 1 / 1;
-    grid-row: 3 / 3;
-}
-
-#num-8 {
-    grid-column: 2 / 2;
-    grid-row: 3 / 3;
-}
-
-#num-9 {
-    grid-column: 3 / 3;
-    grid-row: 3 / 3;
-}
-
-#num-0 {
-    grid-column: 2 / 2;
-    grid-row: 4 / 4;
-}
-
-#adicao {
-    grid-column: 4 / 4;
-    grid-row: 1 / 1;
-}
-
-#subtracao {
-    grid-column: 4 / 4;
-    grid-row: 2 / 2;
-}
-
-#multiplicacao {
-    grid-column: 4 / 4;
-    grid-row: 3 / 3;
-}
-
-#divisao {
-    grid-column: 4 / 4;
-    grid-row: 4 / 4;
+.numero, #ponto, #apagar-1 {
+    background-color: var(--cor_teclas);
 }
 
 #resultado {
-    grid-column: 3 / 3;
-    grid-row: 4 / 4;
+    background-color: var(--cor_btn_resultado);
 }
 
-#clear {
-    grid-column: 1 / 2;
-    grid-row: 4 / 4;
+.operacao, #limpar, #parenteses {
+    background-color: var(--cor_btn_operacao);
+    color: var(--cor_fonte_btn_operacao);
+}
+
+.operacao:hover, #parenteses:hover {
+    background-color: var(--transicao_hover);
+    color: var(--cor_fonte_btn_operacao);
+}
+
+#limpar:hover {
+    background-color: var(--transicao_hover);
+}
+
+.btn:hover, #ponto:hover, #apagar-1:hover {
+    background-color: var(--transicao_hover);
+}
+
+#limpar {
+    color: red;
+}
+
+#resultado:hover {
+    background-color: var(--cor_fonte_btn_operacao);
+}
+
+#primeira-coluna {
+    border-top: 1px solid var(--cor2);
+}
+
+.no-line-break {
+    white-space: nowrap;
+}
+
+#teclado > div {
+    height: 22%;
+}
+
+button > img {
+    display: block;
+    width: 100%;
+    height: 100%;
 }

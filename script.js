@@ -1,125 +1,85 @@
+const teclasNumericasEl = document.querySelectorAll(".numero");
+const teclasOperacoesEl = document.querySelectorAll(".operacao");
+const limparBtn = document.querySelector("#limpar");
+const resultadoBtn = document.querySelector("#resultado");
+const deletarUmCaractereEl = document.querySelector("#apagar-1");
 const visorEl = document.querySelector("#visor");
-const num1El = document.querySelector("#num-1");
-const num2El = document.querySelector("#num-2");
-const num3El = document.querySelector("#num-3");
-const num4El = document.querySelector("#num-4");
-const num5El = document.querySelector("#num-5");
-const num6El = document.querySelector("#num-6");
-const num7El = document.querySelector("#num-7");
-const num8El = document.querySelector("#num-8");
-const num9El = document.querySelector("#num-9");
-const num0El = document.querySelector("#num-0");
-const adicaoEl = document.querySelector("#adicao");
-const subtracaoEl = document.querySelector("#subtracao");
-const multiplicacaoEl = document.querySelector("#multiplicacao");
-const divisaoEl = document.querySelector("#divisao");
-const resultadoEl = document.querySelector("#resultado");
-const clearEl = document.querySelector("#clear");
 
-let operacoes = ['+', '−', '×', '÷'];
+let operacaoUtilizada = false;
+let resultadoUtilizado = false;
 
-clearEl.addEventListener("click", clear);
-
-num1El.addEventListener("click", function escreveValor(){
-    visorEl.value += '1';
-});
-
-num2El.addEventListener("click", function escreveValor(){
-    visorEl.value += '2';
-});
-
-num3El.addEventListener("click", function escreveValor(){
-    visorEl.value += '3';
-});
-
-num4El.addEventListener("click", function escreveValor(){
-    visorEl.value += '4';
-});
-
-num5El.addEventListener("click", function escreveValor(){
-    visorEl.value += '5';
-});
-
-num6El.addEventListener("click", function escreveValor(){
-    visorEl.value += '6';
-});
-
-num7El.addEventListener("click", function escreveValor(){
-    visorEl.value += '7';
-});
-
-num8El.addEventListener("click", function escreveValor(){
-    visorEl.value += '8';
-});
-
-num9El.addEventListener("click", function escreveValor(){
-    visorEl.value += '9';
-});
-
-num0El.addEventListener("click", function escreveValor(){
-    visorEl.value += '0';
-});
-
-adicaoEl.addEventListener("click", function escreveValor(){
-    if(verificaOperacao()){
-        visorEl.value += ' + ';
-    }
-});
-
-subtracaoEl.addEventListener("click", function escreveValor(){
-    if(verificaOperacao()){
-        visorEl.value += ' − ';
-    }
-});
-
-multiplicacaoEl.addEventListener("click", function escreveValor(){
-    if(verificaOperacao()){
-        visorEl.value += ' × ';
-    }
-});
-
-divisaoEl.addEventListener("click", function escreveValor(){
-    if(verificaOperacao()){
-        visorEl.value += ' ÷ ';
-    }
-});
-
-resultadoEl.addEventListener("click", exibeResultado);
-
-function clear() {
-    visorEl.value = '';
-}
-
-function escreveValor(valor) {
-    visorEl.value = valor;
-}
-
-function verificaOperacao() {
-    for(let i = 0; i < visorEl.value.length; i++){
-        for(let j = 0; j < operacoes.length; j++){
-            if(visorEl.value[i] === operacoes[j]){
-                exibeResultado();
-                return true;            
-            }
+teclasNumericasEl.forEach(e => {
+    e.addEventListener("click", (element) => {
+        if(resultadoUtilizado){
+            visorEl.value = element.target.textContent;
+            resultadoUtilizado = false;
         }
-    }
-    return true;
-}
+        else {
+            visorEl.value += element.target.textContent;
+        }
+    })
+});
 
-function exibeResultado() {
-    let valorDoVisor = visorEl.value;
-    let partesDoVisor = valorDoVisor.split(' ');
-    if(partesDoVisor[1] === '+'){
-        visorEl.value = Number(partesDoVisor[0]) + Number(partesDoVisor[2])
+teclasOperacoesEl.forEach(e => {
+    e.addEventListener("click", (element) => {
+        if(!operacaoUtilizada && visorEl.value != ''){
+            visorEl.value += ' ';
+            visorEl.value += element.target.textContent;
+            visorEl.value += ' ';
+            operacaoUtilizada = true;
+            resultadoUtilizado = false;
+        } else if(operacaoUtilizada && visorEl.value != '') {
+            resultado();
+            operacaoUtilizada = false;
+            visorEl.value += ' ';
+            visorEl.value += element.target.textContent;
+            visorEl.value += ' ';
+            operacaoUtilizada = true;
+            resultadoUtilizado = false;
+        }
+    })
+});
+
+limparBtn.addEventListener("click", () => {
+    visorEl.value = '';
+    operacaoUtilizada = false;
+});
+
+resultadoBtn.addEventListener("click", resultado);
+
+deletarUmCaractereEl.addEventListener("click", () => {
+    if (visorEl.value[visorEl.value.length - 1] === ' ') {
+        visorEl.value = visorEl.value.slice(0, -1);
+        visorEl.value = visorEl.value.slice(0, visorEl.value.lastIndexOf(' '));
+        
+        operacaoUtilizada = false;
+    } else {
+        visorEl.value = visorEl.value.slice(0, -1);
     }
-    else if(partesDoVisor[1] === '−'){
-        visorEl.value = Number(partesDoVisor[0]) - Number(partesDoVisor[2])
-    }
-    else if(partesDoVisor[1] === '×'){
-        visorEl.value = Number(partesDoVisor[0]) * Number(partesDoVisor[2])
-    }
-    else if(partesDoVisor[1] === '÷'){
-        visorEl.value = Number(partesDoVisor[0]) / Number(partesDoVisor[2])
+});
+
+function resultado() {
+    if(visorEl.value.trim() !== '' && visorEl.value[visorEl.value.length - 1] !== ' '){
+        const visor = visorEl.value.split(' ');
+        let num1 = parseFloat(visor[0]);
+        let num2 = parseFloat(visor[2]);
+        let operacao = visor[1];
+        if (operacao === '÷') {
+            if (num2 !== 0) {
+                visorEl.value = num1 / num2;
+            } else {
+                visorEl.value = 'Erro: Divisão por zero';
+            }
+        } else if (operacao === '+') {
+            visorEl.value = num1 + num2;
+        } else if (operacao === '-') {
+            visorEl.value = num1 - num2;
+        } else if (operacao === '×') {
+            visorEl.value = num1 * num2;
+        } else if (operacao === '%') {
+            visorEl.value = (num1 * num2) / 100;
+        }
+        operacaoUtilizada = false;
+        resultadoUtilizado = true;
     }
 }
-
